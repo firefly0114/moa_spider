@@ -7,7 +7,7 @@ from base import SpiderBase
 
 from .MoaIssueSpider import MoaIssueSpider
 from .MoaUnitSpider import MoaUnitSpider
-from .MoaPageSpider import MoaPageSpider
+from .MoaGkPageSpider import MoaGkPageSpider
 
 class MoaGKSpider(SpiderBase):
     URL="http://www.moa.gov.cn/gk/"
@@ -48,7 +48,7 @@ class MoaGKSpider(SpiderBase):
                 "建议提案","规划计划","农事指导",
                 "政府网站年度报告",
             ):
-                spider=MoaPageSpider([category],page_url)
+                spider=MoaGkPageSpider([category],page_url)
 
             # 政府网站年度报告，不爬
             if category in ("政府网站年度报告"):
