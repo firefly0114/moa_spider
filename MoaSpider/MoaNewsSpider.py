@@ -1,0 +1,47 @@
+import logging
+from urllib.parse import urljoin
+
+from bs4 import BeautifulSoup
+
+from base import SpiderBase
+
+from .MoaIssueSpider import MoaIssueSpider
+from .MoaPageSpider import MoaPageSpider
+from .MoaPageSpider import MoaPageSpider
+
+class MoaNewsSpider(SpiderBase):
+    URL="http://www.moa.gov.cn/xw/"
+
+
+    def request(self):
+        resp=self.client.get(self.URL)
+        resp.encoding="utf8"
+        return resp.text
+
+    def parser(self,html):
+        doc=BeautifulSoup(html,features="html.parser")
+        unit_list=doc.find_all(class_="news-title")
+        for unit in unit_list:
+            a_elm=unit.find("a")
+            category=a_elm.string
+
+            spider=MoaPageSpider([category],urljoin(self.URL,a_elm.string),MoaPageSpider)
+
+            logging.info("开始爬取新闻: {}".format(category))
+            spider.run()
+            logging.info("新闻爬取完毕: {}".format(category))
+
+
+
+
+        
+
+    def storage(self):
+        pass
+
+
+    def run(self):
+        logging.info("开始爬取新闻")
+        data=self.request()
+        data=self.parser(data)
+        logging.info("新闻爬取完毕")
