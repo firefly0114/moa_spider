@@ -4,7 +4,7 @@ import logging
 
 from base import SpiderBase
 
-from .MoaDocumentSpider import MoaDocumentSpider
+from .MoaGkDocumentSpider import MoaGkDocumentSpider
 
 class MoaGkPageSpider(SpiderBase):
     """爬取公开信息翻页内容"""
@@ -25,7 +25,7 @@ class MoaGkPageSpider(SpiderBase):
         # TODO: 解析并爬取文章
         unit_list=doc.find_all(class_="gknr_unit")
         for unit in unit_list:
-            content_spider=MoaDocumentSpider(self.category,content_url)
+            content_spider=MoaGkDocumentSpider(self.category,content_url)
             content_spider.run()
         # 解析并翻页
         next_page_elm=doc.find("a",string="下一页")

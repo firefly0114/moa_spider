@@ -6,8 +6,7 @@ from bs4 import BeautifulSoup
 from base import SpiderBase
 
 from .MoaIssueSpider import MoaIssueSpider
-from .MoaPageSpider import MoaPageSpider
-from .MoaPageSpider import MoaPageSpider
+from .MoaReportPageSpider import MoaReportPageSpider
 
 class MoaNewsSpider(SpiderBase):
     URL="http://www.moa.gov.cn/xw/"
@@ -25,7 +24,7 @@ class MoaNewsSpider(SpiderBase):
             a_elm=unit.find("a")
             category=a_elm.string
 
-            spider=MoaPageSpider([category],urljoin(self.URL,a_elm.string),MoaPageSpider)
+            spider=MoaReportPageSpider([category],urljoin(self.URL,a_elm.string))
 
             logging.info("开始爬取新闻: {}".format(category))
             spider.run()

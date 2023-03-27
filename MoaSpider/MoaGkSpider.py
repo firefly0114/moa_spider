@@ -6,10 +6,10 @@ from bs4 import BeautifulSoup
 from base import SpiderBase
 
 from .MoaIssueSpider import MoaIssueSpider
-from .MoaUnitSpider import MoaUnitSpider
+from .MoaGKUnitSpider import MoaGkUnitSpider
 from .MoaGkPageSpider import MoaGkPageSpider
 
-class MoaGKSpider(SpiderBase):
+class MoaGkSpider(SpiderBase):
     URL="http://www.moa.gov.cn/gk/"
 
 
@@ -31,7 +31,7 @@ class MoaGKSpider(SpiderBase):
             # 通知公告
             # 政策法规
             if category in ("通知公告","政策法规"):
-                spider=MoaUnitSpider([category],page_url)
+                spider=MoaGkUnitSpider([category],page_url)
 
             # 农业农村部公报
             if category in ("农业农村部公报"):
