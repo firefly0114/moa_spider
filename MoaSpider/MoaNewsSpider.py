@@ -13,7 +13,7 @@ class MoaNewsSpider(SpiderBase):
 
 
     def request(self):
-        resp=self.client.get(self.URL)
+        resp=self.get(self.URL)
         resp.encoding="utf8"
         return resp.text
 

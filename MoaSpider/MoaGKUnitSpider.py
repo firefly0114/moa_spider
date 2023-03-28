@@ -13,7 +13,7 @@ class MoaGkUnitSpider(SpiderBase):
 
 
     def request(self):
-        resp=self.client.get(self.page_url)
+        resp=self.get(self.page_url)
         resp.encoding="utf8"
         return resp.text
 

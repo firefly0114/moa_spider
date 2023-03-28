@@ -14,7 +14,7 @@ class MoaGkSpider(SpiderBase):
 
 
     def request(self):
-        resp=self.client.get("http://www.moa.gov.cn/gk/")
+        resp=self.get(self.URL)
         resp.encoding="utf8"
         return resp.text
 

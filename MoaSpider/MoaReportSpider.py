@@ -16,8 +16,7 @@ class MoaReportSpider(SpiderBase):
 
     def request(self):
         try:
-            resp=self.client.get(self.page_url)
-            resp.raise_for_status()
+            resp=self.get(self.page_url)
             resp.encoding="utf8"
         except requests.HTTPError as e:
             return None,e
