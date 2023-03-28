@@ -12,3 +12,6 @@ class SpiderParseError(SpiderError):
 
 class SpiderStorageError(SpiderError):
     pass
+
+class SpiderTaskEndError(SpiderError):
+    pass
