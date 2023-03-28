@@ -17,7 +17,7 @@ class MoaGkUnitSpider(SpiderBase):
         resp.encoding="utf8"
         return resp.text
 
-    def parser(self,html):
+    def parse(self,html):
         doc=BeautifulSoup(html,features="html.parser")
         unit_list=doc.find_all(class_="gknrtitle")
         print(len(unit_list))
@@ -36,5 +36,5 @@ class MoaGkUnitSpider(SpiderBase):
 
 
     def run(self):
-        data,status=self.request()
-        data,status=self.parser(data)
+        data=self.request()
+        data=self.parser(data)

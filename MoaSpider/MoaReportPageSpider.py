@@ -20,7 +20,7 @@ class MoaReportPageSpider(SpiderBase):
         resp.encoding="utf8"
         return resp.text
 
-    def parser(self,html):
+    def parse(self,html):
         doc=BeautifulSoup(html,features="html.parser")
         # TODO: 解析并爬取文章
         unit_list=doc.find_all(class_="gknr_unit")

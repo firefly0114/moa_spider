@@ -22,7 +22,7 @@ class MoaReportSpider(SpiderBase):
             return None,e
         return resp.text,None
 
-    def parser(self,html):
+    def parse(self,html):
         doc=BeautifulSoup(html,features="html.parser")
         article=doc.find(class_="main bjjM hd_wzxq")
         title=article.find(class_="bjjMTitle").string
