@@ -7,18 +7,16 @@ from base import SpiderBase
 class MoaGkDocumentSpider(SpiderBase):
     """爬取指定的文章"""
 
-    def __init__(self,category,page_url):
-        super().__init__()
+    def __init__(self,category,url):
+        super().__init__(url)
         self.category=category
-        self.page_url=page_url
-
 
     def request(self):
-        resp=self.get(self.page_url)
+        resp=self.get(self.url)
         resp.encoding="utf8"
         return resp.text
 
-    def parser(self,html):
+    def parse(self,html):
         doc=BeautifulSoup(html,features="html.parser")
         content_elm=doc.find(class_="gsj_content")
         title=content_elm.find(class_="xxgk_title").string
@@ -34,13 +32,5 @@ class MoaGkDocumentSpider(SpiderBase):
             "source":source,
             "text":text,
         }
-        return result,None
+        return result
         
-
-    def storage(self):
-        pass
-
-
-    def run(self):
-        data=self.request()
-        data=self.parser(data)

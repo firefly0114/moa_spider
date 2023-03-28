@@ -12,13 +12,16 @@ from .MoaGkPageSpider import MoaGkPageSpider
 class MoaGkSpider(SpiderBase):
     URL="http://www.moa.gov.cn/gk/"
 
+    def __init__(self):
+        super().__init__(self.URL)
+
 
     def request(self):
-        resp=self.get(self.URL)
+        resp=self.get(self.url)
         resp.encoding="utf8"
         return resp.text
 
-    def parser(self,html):
+    def parse(self,html):
         doc=BeautifulSoup(html,features="html.parser")
         unit_list=doc.find_all(class_="gknr_unit")
         print(len(unit_list))
@@ -58,18 +61,3 @@ class MoaGkSpider(SpiderBase):
             logging.info("开始爬取: {}".format(category))
             spider.run()
             logging.info("爬取完毕: {}".format(category))
-
-
-
-
-        
-
-    def storage(self):
-        pass
-
-
-    def run(self):
-        logging.info("爬虫启动")
-        data=self.request()
-        data=self.parser(data)
-        logging.info("爬取退出")

@@ -11,9 +11,11 @@ from .MoaReportPageSpider import MoaReportPageSpider
 class MoaNewsSpider(SpiderBase):
     URL="http://www.moa.gov.cn/xw/"
 
+    def __init__(self):
+        super().__init__(self.URL)
 
     def request(self):
-        resp=self.get(self.URL)
+        resp=self.get(self.url)
         resp.encoding="utf8"
         return resp.text
 

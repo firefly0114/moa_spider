@@ -8,15 +8,12 @@ from .MoaReportSpider import MoaReportSpider
 
 class MoaReportPageSpider(SpiderBase):
     """爬取翻页内容"""
-    def __init__(self,category,page_url):
-        super().__init__()
+    def __init__(self,category,url):
+        super().__init__(url)
         self.category=category
-        self.page_url=page_url
   
-
-
     def request(self):
-        resp=self.get(self.page_url)
+        resp=self.get(self.url)
         resp.encoding="utf8"
         return resp.text
 
@@ -35,17 +32,3 @@ class MoaReportPageSpider(SpiderBase):
             return
         next_page_spider=MoaReportPageSpider(self.category,urljoin(self.page_url,url))
         next_page_spider.run()
-
-
-
-
-
-        
-
-    def storage(self):
-        pass
-
-
-    def run(self):
-        data=self.request()
-        data=self.parser(data)

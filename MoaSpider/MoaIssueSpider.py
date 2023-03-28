@@ -7,13 +7,12 @@ from .MoaReportPageSpider import MoaReportPageSpider
 
 class MoaIssueSpider(SpiderBase):
     """爬取分期内容"""
-    def __init__(self,page_url):
-        super().__init__()
-        self.page_url=page_url
+    def __init__(self,url):
+        super().__init__(url)
 
 
     def request(self):
-        resp=self.get(self.page_url)
+        resp=self.get(self.url)
         resp.encoding="utf8"
         return resp.text
 
@@ -24,16 +23,6 @@ class MoaIssueSpider(SpiderBase):
         for unit in unit_list:
             unit_title=unit.span.string
             href=unit.a['href']
-            page_url=urljoin(self.page_url,href)
+            page_url=urljoin(self.url,href)
             # TODO:
             MoaReportPageSpider(page_url)
-
-        
-
-    def storage(self):
-        pass
-
-
-    def run(self):
-        data=self.request()
-        data=self.parser(data)

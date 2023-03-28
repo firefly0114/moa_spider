@@ -8,19 +8,15 @@ from base import SpiderBase
 class MoaReportSpider(SpiderBase):
     """爬取指定的新闻或公报（农业农村部）"""
 
-    def __init__(self,category,page_url):
-        super().__init__()
+    def __init__(self,category,url):
+        super().__init__(url)
         self.category=category
-        self.page_url=page_url
 
 
     def request(self):
-        try:
-            resp=self.get(self.page_url)
-            resp.encoding="utf8"
-        except requests.HTTPError as e:
-            return None,e
-        return resp.text,None
+        resp=self.get(self.url)
+        resp.encoding="utf8"
+        return resp.text
 
     def parse(self,html):
         doc=BeautifulSoup(html,features="html.parser")
@@ -40,29 +36,4 @@ class MoaReportSpider(SpiderBase):
             "source":source,
             "text":text,
         }
-        return result,None
-
-        
-
-    def storage(self):
-        pass
-
-
-    def run(self):
-        data,status=self.request()
-        if status:
-            logging.error("爬取报道失败, category:{}, title:{}".format(self.category,self.title))
-            return
-
-        data,status=self.parser(data)
-        if status:
-            logging.error("爬取报道失败, category:{}, title:{}".format(self.category,self.title))
-            return
-
-        status=self.storage(data)
-        if status:
-            logging.error("爬取报道失败, category:{}, title:{}".format(self.category,self.title))
-            return
-        
-        logging.error("爬取报道成功, category:{}, title:{}".format(self.category,self.title))
-        return
+        return result

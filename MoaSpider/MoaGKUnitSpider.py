@@ -6,14 +6,13 @@ from .MoaReportPageSpider import MoaReportPageSpider
 
 class MoaGkUnitSpider(SpiderBase):
     """爬取分子单元块的页面"""
-    def __init__(self,category,page_url):
-        super().__init__()
+    def __init__(self,category,url):
+        super().__init__(url)
         self.category=category
-        self.page_url=page_url
 
 
     def request(self):
-        resp=self.get(self.page_url)
+        resp=self.get(self.url)
         resp.encoding="utf8"
         return resp.text
 
@@ -24,7 +23,7 @@ class MoaGkUnitSpider(SpiderBase):
         for unit in unit_list:
             unit_title=unit.span.string
             href=unit.a['href']
-            page_url=urljoin(self.page_url,href)
+            page_url=urljoin(self.url,href)
             MoaReportPageSpider(page_url)
             stop=MoaReportPageSpider.run()
             

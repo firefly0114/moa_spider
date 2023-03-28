@@ -8,19 +8,18 @@ from .MoaGkDocumentSpider import MoaGkDocumentSpider
 
 class MoaGkPageSpider(SpiderBase):
     """爬取公开信息翻页内容"""
-    def __init__(self,category,page_url):
-        super().__init__()
+    def __init__(self,category,url):
+        super().__init__(url)
         self.category=category
-        self.page_url=page_url
   
 
 
     def request(self):
-        resp=self.get(self.page_url)
+        resp=self.get(self.url)
         resp.encoding="utf8"
         return resp.text
 
-    def parser(self,html):
+    def parse(self,html):
         doc=BeautifulSoup(html,features="html.parser")
         # TODO: 解析并爬取文章
         unit_list=doc.find_all(class_="gknr_unit")
@@ -33,7 +32,7 @@ class MoaGkPageSpider(SpiderBase):
         if not url:
             logging.info("已经爬取到尾页, category:{}".format(self.category))
             return
-        next_page_spider=MoaGkPageSpider(self.category,urljoin(self.page_url,url))
+        next_page_spider=MoaGkPageSpider(self.category,urljoin(self.url,url))
         next_page_spider.run()
 
 
