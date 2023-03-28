@@ -27,13 +27,3 @@ class MoaGkUnitSpider(SpiderBase):
             MoaReportPageSpider(page_url)
             stop=MoaReportPageSpider.run()
             
-
-        
-
-    def storage(self):
-        pass
-
-
-    def run(self):
-        data=self.request()
-        data=self.parser(data)
